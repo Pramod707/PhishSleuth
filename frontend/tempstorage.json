@@ -1,11 +1,27 @@
-"background": {
+
+  {
+  "manifest_version": 2,
+  "name": "PhishShield",
+  "version": "1.0",
+  "description": "Detect phishing websites using a Flask backend.",
+
+  "background": {
     "scripts": [
       "js/randomforest.js",
       "js/background.js"
     ],
     "persistent": false
   },
+
   "browser_action": {
     "default_popup": "plugin_ui.html"
   },
-  ,"webRequest", "*://*.google.com/"
+
+  "permissions": [
+    "*://*.google.com/",
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "activeTab"
+  ]
+}
