@@ -131,6 +131,30 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 	});
 });
 
+//mail - sms spamm
+function checkSpamMessage(text) {
+  fetch('http://localhost:5000/predict_spam', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `message=${encodeURIComponent(text)}`
+  })
+  .then(res => res.text())
+  .then(data => {
+    if (data === "spam") {
+      alert("⚠️ This message looks like SPAM.");
+    } else {
+      alert("✅ This message appears safe.");
+    }
+  })
+  .catch(err => {
+    alert("Server error.");
+    console.error(err);
+  });
+}
+
+
 // });
 
 

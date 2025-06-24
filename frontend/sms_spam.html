@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Spam Checker</title>
+  <link href="./plugin_ui.css" rel="stylesheet">
+</head>
+<body>
+  <h2>SMS / Email Spam Detection</h2>
+
+  <textarea id="spam_input" rows="4" cols="50" placeholder="Paste your message here..."></textarea><br>
+  <button onclick="checkSpam()">Scan</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    function checkSpam() {
+      const msg = document.getElementById('spam_input').value;
+      fetch("http://localhost:5000/spam", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("result").innerText =
+          data.prediction === "spam" ? "🚫 Spam Detected" : "✅ Not Spam";
+      })
+      .catch(err => {
+        document.getElementById("result").innerText = "❌ Error checking spam.";
+      });
+    }
+  </script>
+</body>
+</html>
